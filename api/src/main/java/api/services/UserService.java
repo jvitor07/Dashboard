@@ -1,5 +1,6 @@
 package api.services;
 
+import api.exceptions.BadRequestException;
 import api.models.User;
 import api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class UserService {
     }
 
     public User createUser(User model) {
+        if(this.userRepository.findByEmail(model.getEmail()).isPresent()) {
+            throw new BadRequestException("O email informado já está em uso por outra conta");
+        }
         return this.userRepository.save(model);
     }
 }

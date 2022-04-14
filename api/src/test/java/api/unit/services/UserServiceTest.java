@@ -21,7 +21,7 @@ public class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
-    private UserFactory userFactory;
+    private final UserFactory userFactory;
     private UserService userService;
 
     public UserServiceTest() {
@@ -39,5 +39,13 @@ public class UserServiceTest {
         User payload = this.userFactory.newInstance();
         this.userService.createUser(payload);
         verify(this.userRepository).save(payload);
+    }
+
+    @Order(2)
+    @Test
+    void itShouldVerifyIfTheCreateUserMethodInUserServiceUseFindByEmailMethodOfUserRepository() {
+        User payload = this.userFactory.newInstance();
+        this.userService.createUser(payload);
+        verify(this.userRepository).findByEmail(payload.getEmail());
     }
 }

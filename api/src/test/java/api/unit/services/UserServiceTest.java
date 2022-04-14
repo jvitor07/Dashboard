@@ -1,5 +1,6 @@
 package api.unit.services;
 
+import api.exceptions.BadRequestException;
 import api.factories.UserFactory;
 import api.models.User;
 import api.repositories.UserRepository;
@@ -13,6 +14,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -47,5 +52,15 @@ public class UserServiceTest {
         User payload = this.userFactory.newInstance();
         this.userService.createUser(payload);
         verify(this.userRepository).findByEmail(payload.getEmail());
+    }
+
+    @Order(3)
+    @Test
+    void itShouldReceiveErrorMessageWhenPassAUserWithEmailThatIsAlreadyInUseToCreateUserMethodOfUserService() {
+        User payload = this.userFactory.newInstance();
+        given(this.userRepository.findByEmail(payload.getEmail())).willReturn(Optional.of(payload));
+        assertThatThrownBy(() -> this.userService.createUser(payload))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("O email informado está sendo utilizado por outra conta");
     }
 }

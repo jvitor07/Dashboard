@@ -26,7 +26,7 @@ public class UserService {
 
     private void validateIfTheEmailIsAlreadyInUse(String email) {
         if(Boolean.TRUE.equals(this.emailInUse(email))) {
-            throw new BadRequestException("O email informado já está em uso por outra conta");
+            throw new BadRequestException("O email informado está sendo utilizado por outra conta");
         }
     }
 

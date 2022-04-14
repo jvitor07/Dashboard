@@ -16,9 +16,21 @@ public class UserService {
     }
 
     public User createUser(User model) {
-        if(this.userRepository.findByEmail(model.getEmail()).isPresent()) {
+        this.validateIfTheEmailIsAlreadyInUse(model.getEmail());
+        return this.saveUser(model);
+    }
+
+    private User saveUser(User model) {
+        return this.userRepository.save(model);
+    }
+
+    private void validateIfTheEmailIsAlreadyInUse(String email) {
+        if(Boolean.TRUE.equals(this.emailInUse(email))) {
             throw new BadRequestException("O email informado já está em uso por outra conta");
         }
-        return this.userRepository.save(model);
+    }
+
+    private boolean emailInUse(String email) {
+        return this.userRepository.findByEmail(email).isPresent();
     }
 }

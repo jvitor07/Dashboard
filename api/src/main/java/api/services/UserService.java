@@ -1,6 +1,6 @@
 package api.services;
 
-import api.exceptions.BadRequestException;
+import api.exceptions.BadRequest;
 import api.models.User;
 import api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class UserService {
 
     private void validateIfTheEmailIsAlreadyInUse(String email) {
         if(Boolean.TRUE.equals(this.emailInUse(email))) {
-            throw new BadRequestException("O email informado está sendo utilizado por outra conta");
+            throw new BadRequest("O email informado está sendo utilizado por outra conta");
         }
     }
 

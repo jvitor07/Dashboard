@@ -1,6 +1,6 @@
 package api.unit.services;
 
-import api.exceptions.BadRequestException;
+import api.exceptions.BadRequest;
 import api.factories.UserFactory;
 import api.models.User;
 import api.repositories.UserRepository;
@@ -60,7 +60,7 @@ public class UserServiceTest {
         User payload = this.userFactory.newInstance();
         given(this.userRepository.findByEmail(payload.getEmail())).willReturn(Optional.of(payload));
         assertThatThrownBy(() -> this.userService.createUser(payload))
-                .isInstanceOf(BadRequestException.class)
+                .isInstanceOf(BadRequest.class)
                 .hasMessageContaining("O email informado está sendo utilizado por outra conta");
     }
 }

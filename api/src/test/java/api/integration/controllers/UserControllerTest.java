@@ -60,6 +60,7 @@ public class UserControllerTest {
         ResponseDTO<User> responseBody = this.mapper.readValue(response.getContentAsString(StandardCharsets.UTF_8), new TypeReference<>() {});
         assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
         assertThat(expected).isEqualTo(responseBody);
+        assertThat(responseBody.getResponseObject().getPassword()).isNotEqualTo(payload.getPassword());
     }
 
     @Order(2)

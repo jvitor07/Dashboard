@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -26,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping(path = "/register")
-    public ResponseEntity<ResponseDTO<User>> register(@RequestBody User model) {
+    public ResponseEntity<ResponseDTO<User>> register(@RequestBody @Valid User model) {
         try {
             User result = this.userService.createUser(model);
 

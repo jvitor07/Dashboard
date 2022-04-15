@@ -12,7 +12,7 @@ public class UserFactory {
 
     public UserFactory() {
         this.id = null;
-        this.name = "test";
+        this.name = "test test";
         this.email = "test@test.com";
         this.password = "secret123";
     }

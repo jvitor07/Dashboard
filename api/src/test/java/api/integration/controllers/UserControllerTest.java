@@ -58,6 +58,7 @@ public class UserControllerTest {
         MockHttpServletResponse response = result.getResponse();
         ResponseDTO<User> responseBody = this.mapper.readValue(response.getContentAsString(StandardCharsets.UTF_8), new TypeReference<>() {});
         assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
+        assertThat(payload.getPassword()).isNotEqualTo(responseBody.getResponseObject().getPassword());
     }
 
     @Order(2)

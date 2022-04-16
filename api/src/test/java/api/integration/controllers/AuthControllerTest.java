@@ -56,7 +56,7 @@ public class AuthControllerTest {
     @Order(1)
     @Test
     void itShouldGetErrorMessageWhenTryingToGenerateTokenWithWrongCredentials() throws Exception {
-        LoginDTO payload = new LoginDTO("test1@test.com", "secret123");
+        LoginDTO payload = new LoginDTO("test2@test.com", "secret123");
         ResponseDTO<LoginDTO> expected = new ResponseDTO<>(List.of("Email ou senha incorretos"), null);
         MvcResult result = this.mockMvc.perform(post(LOGIN_ROUTE)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -71,7 +71,7 @@ public class AuthControllerTest {
     @Order(2)
     @Test
     void itShouldReceiveAccessTokenWhenLoginIsSuccessful() throws Exception {
-        User userPayload = this.userFactory.newInstance();
+        User userPayload = this.userFactory.setEmail("test3@test.com").newInstance();
         LoginDTO loginPayload = new LoginDTO(userPayload.getEmail(), userPayload.getPassword());
         userPayload.setPassword(this.encoder.encode(userPayload.getPassword()));
         this.userRepository.save(userPayload);

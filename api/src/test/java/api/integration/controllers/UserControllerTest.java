@@ -42,8 +42,8 @@ public class UserControllerTest {
         this.userFactory = new UserFactory();
     }
 
-    @AfterEach
-    void tearDown() {
+    @BeforeEach
+    void setUp() {
         this.userRepository.deleteAll();
     }
 

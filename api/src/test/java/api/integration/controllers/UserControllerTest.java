@@ -42,24 +42,25 @@ public class UserControllerTest {
         this.userFactory = new UserFactory();
     }
 
-    @AfterEach
-    void tearDown() {
+    @BeforeEach
+    void setUp() {
         this.userRepository.deleteAll();
     }
 
     @Order(1)
     @Test
     void itShouldCreateNewUser() throws Exception {
-        User payload = this.userFactory.newInstance();
-        ResponseDTO<User> expected = new ResponseDTO<>(null, this.userFactory.setId(1L).setPassword(null).newInstance());
+        User payload = this.userFactory.setEmail("test1@test.com").newInstance();
         MvcResult result = this.mockMvc.perform(post(USER_REGISTER_ROUTE)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(payload)))
-        .andReturn();
+                .andReturn();
         MockHttpServletResponse response = result.getResponse();
         ResponseDTO<User> responseBody = this.mapper.readValue(response.getContentAsString(StandardCharsets.UTF_8), new TypeReference<>() {});
         assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
-        assertThat(expected).isEqualTo(responseBody);
+        assertThat(payload.getName()).isEqualTo(responseBody.getResponseObject().getName());
+        assertThat(payload.getEmail()).isEqualTo(responseBody.getResponseObject().getEmail());
+        assertThat(payload.getPassword()).isNotEqualTo(responseBody.getResponseObject().getPassword());
     }
 
     @Order(2)

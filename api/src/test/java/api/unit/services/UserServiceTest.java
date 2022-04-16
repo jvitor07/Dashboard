@@ -13,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -26,6 +27,8 @@ public class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
+    @Mock
+    private PasswordEncoder encoder;
     private final UserFactory userFactory;
     private UserService userService;
 
@@ -35,7 +38,7 @@ public class UserServiceTest {
 
     @BeforeEach
     void setUp() {
-        this.userService = new UserService(this.userRepository);
+        this.userService = new UserService(userRepository, encoder);
     }
 
     @Order(1)
@@ -55,6 +58,15 @@ public class UserServiceTest {
     }
 
     @Order(3)
+    @Test
+    void itShouldVerifyIfTheCreateUserMethodInUserServiceUseEncodeMethodOfPasswordEncoder() {
+        User payload = this.userFactory.newInstance();
+        String expectedPassword = payload.getPassword();
+        this.userService.createUser(payload);
+        verify(this.encoder).encode(expectedPassword);
+    }
+
+    @Order(4)
     @Test
     void itShouldReceiveErrorMessageWhenPassAUserWithEmailThatIsAlreadyInUseToCreateUserMethodOfUserService() {
         User payload = this.userFactory.newInstance();

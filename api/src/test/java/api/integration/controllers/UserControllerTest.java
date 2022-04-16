@@ -51,16 +51,13 @@ public class UserControllerTest {
     @Test
     void itShouldCreateNewUser() throws Exception {
         User payload = this.userFactory.setEmail("test1@test.com").newInstance();
-        ResponseDTO<User> expected = new ResponseDTO<>(null, this.userFactory.setId(1L).setEmail("test1@test.com").setPassword(null).newInstance());
         MvcResult result = this.mockMvc.perform(post(USER_REGISTER_ROUTE)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(payload)))
-        .andReturn();
+                .andReturn();
         MockHttpServletResponse response = result.getResponse();
         ResponseDTO<User> responseBody = this.mapper.readValue(response.getContentAsString(StandardCharsets.UTF_8), new TypeReference<>() {});
         assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
-        assertThat(expected).isEqualTo(responseBody);
-        assertThat(responseBody.getResponseObject().getPassword()).isNotEqualTo(payload.getPassword());
     }
 
     @Order(2)

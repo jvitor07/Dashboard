@@ -51,7 +51,7 @@ public class UserControllerTest {
     @Test
     void itShouldCreateNewUser() throws Exception {
         User payload = this.userFactory.setEmail("test1@test.com").newInstance();
-        ResponseDTO<User> expected = new ResponseDTO<>(null, this.userFactory.setId(1L).setPassword(null).newInstance());
+        ResponseDTO<User> expected = new ResponseDTO<>(null, this.userFactory.setId(1L).setEmail("test1@test.com").setPassword(null).newInstance());
         MvcResult result = this.mockMvc.perform(post(USER_REGISTER_ROUTE)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(payload)))

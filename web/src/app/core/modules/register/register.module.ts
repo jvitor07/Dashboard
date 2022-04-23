@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from '../../../app.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { RegisterRoutingModule } from './register.routing.module';
-import { HeaderComponent } from '../../../shared/header/header.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../shared/shared.module';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
     declarations: [
@@ -11,7 +12,10 @@ import { SharedModule } from '../../../shared/shared.module';
     ],
     imports: [
         RegisterRoutingModule,
-        SharedModule
+        SharedModule,
+        FormsModule,
+        ReactiveFormsModule, 
+        CommonModule
     ],
     providers: [
     ],

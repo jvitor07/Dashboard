@@ -5,15 +5,39 @@
             <div class="flex justify-center w-full p-1">
                 <p class="text-white font-bold p-2 rounded bg-green-600" href="#">DB</p>
             </div>
-            <form>
+            <form #cadastroForm = "ngForm" (ngSubmit)="{}">
                 <div class="flex flex-col gap-y-2 w-full p-1">
-                    <label class="text-green-700">Nome</label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="name">
-                    <label class="text-green-700">Email</label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email">
-                    <label class="text-green-700">Senha</label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password">
-                    <button class="mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cadastrar</button>
+                    <label for="name" class="text-green-700">Nome</label>
+                    <input 
+                        required
+                        id="name"
+                        name="name"
+                        [(ngModel)]="form.name"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                        type="name">
+                    <label for="email" class="text-green-700">Email</label>
+                    <input 
+                        required
+                        id="email"
+                        name="email"
+                        [(ngModel)]="form.email"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        type="email">
+                    <label for="password" class="text-green-700">Senha</label>
+                    <input 
+                        required
+                        id="password"
+                        name="password"
+                        [(ngModel)]="form.password"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                        type="password">
+                    <button 
+                        (click)="register()"
+                        [disabled]="!cadastroForm.valid"
+                        [ngClass]="!cadastroForm.valid ? 'cursor-not-allowed' : 'cursor-pointer'"
+                        class="mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        >Cadastrar
+                    </button>
                 </div>
             </form>
             <div class="flex justify-end w-full p-1">

@@ -8,7 +8,7 @@ import { User } from "../../models/user";
     providedIn: 'root'
   })
 export class UserService extends ApiService {
-    constructor(httpClient: HttpClient) {
+    constructor(private httpClient: HttpClient) {
         super('/api/v1/users', httpClient);
     }
 

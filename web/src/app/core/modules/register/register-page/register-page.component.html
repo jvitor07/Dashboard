@@ -1,0 +1,48 @@
+<div class="flex flex-col w-screen h-screen">
+    <app-header></app-header>
+    <main class="flex items-center justify-center w-full h-full bg-gray-100">
+        <div class="flex flex-col gap-y-3 bg-white p-5 rounded drop-shadow-lg">
+            <div class="flex justify-center w-full p-1">
+                <p class="text-white font-bold p-2 rounded bg-green-600" href="#">DB</p>
+            </div>
+            <form #cadastroForm = "ngForm" (ngSubmit)="{}">
+                <div class="flex flex-col gap-y-2 w-full p-1">
+                    <label for="name" class="text-green-700">Nome</label>
+                    <input 
+                        required
+                        id="name"
+                        name="name"
+                        [(ngModel)]="form.name"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                        type="name">
+                    <label for="email" class="text-green-700">Email</label>
+                    <input 
+                        required
+                        id="email"
+                        name="email"
+                        [(ngModel)]="form.email"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        type="email">
+                    <label for="password" class="text-green-700">Senha</label>
+                    <input 
+                        required
+                        id="password"
+                        name="password"
+                        [(ngModel)]="form.password"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                        type="password">
+                    <button 
+                        (click)="register()"
+                        [disabled]="!cadastroForm.valid"
+                        [ngClass]="!cadastroForm.valid ? 'cursor-not-allowed' : 'cursor-pointer'"
+                        class="mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        >Cadastrar
+                    </button>
+                </div>
+            </form>
+            <div class="flex justify-end w-full p-1">
+                <a class="text-sm text-green-700" href="#">Já possui uma conta?</a>
+            </div>
+        </div>
+    </main>
+</div>

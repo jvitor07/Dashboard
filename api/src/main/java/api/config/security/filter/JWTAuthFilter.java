@@ -2,9 +2,8 @@ package api.config.security.filter;
 
 import api.dtos.LoginDTO;
 import api.dtos.ResponseDTO;
-import api.dtos.TokenResponseDTO;
+import api.dtos.AuthResponseDTO;
 import api.exceptions.BadRequest;
-import api.models.User;
 import api.models.UserDetailsImpl;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -57,14 +56,15 @@ public class JWTAuthFilter extends UsernamePasswordAuthenticationFilter {
                 .withSubject(userDetails.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + JWT_EXPIRES_AT))
                 .sign(algorithm);
-        response.getWriter().write(new ObjectMapper().writeValueAsString(new ResponseDTO<>(null, new TokenResponseDTO(token))));
+        response.setCharacterEncoding("utf-8");
+        response.getWriter().write(new ObjectMapper().writeValueAsString(new ResponseDTO<>(null, new AuthResponseDTO(token, userDetails))));
         response.getWriter().flush();
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
         response.setStatus(HttpStatus.BAD_REQUEST.value());
-        response.getWriter().write(new ObjectMapper().writeValueAsString(new ResponseDTO<TokenResponseDTO>(List.of("Email ou senha incorretos"), null)));
+        response.getWriter().write(new ObjectMapper().writeValueAsString(new ResponseDTO<AuthResponseDTO>(List.of("Email ou senha incorretos"), null)));
         response.getWriter().flush();
     }
 }

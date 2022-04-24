@@ -2,7 +2,7 @@ package api.integration.controllers;
 
 import api.dtos.LoginDTO;
 import api.dtos.ResponseDTO;
-import api.dtos.TokenResponseDTO;
+import api.dtos.AuthResponseDTO;
 import api.factories.UserFactory;
 import api.models.User;
 import api.repositories.UserRepository;
@@ -80,7 +80,7 @@ public class AuthControllerTest {
                 .content(this.mapper.writeValueAsString(loginPayload)))
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
-        ResponseDTO<TokenResponseDTO> responseBody = this.mapper.readValue(response.getContentAsString(StandardCharsets.UTF_8), new TypeReference<>() {});
+        ResponseDTO<AuthResponseDTO> responseBody = this.mapper.readValue(response.getContentAsString(StandardCharsets.UTF_8), new TypeReference<>() {});
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(responseBody.getResponseObject().getToken()).isNotNull();
     }

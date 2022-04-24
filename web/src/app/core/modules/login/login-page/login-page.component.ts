@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { credentialsDTO } from 'src/app/core/dtos/credentials';
+import { LocalStorageService } from 'src/app/core/services/localStorage.service';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { AuthService } from 'src/app/core/services/v1/auth.service';
+import { IToken } from '../../../models/token';
+import { ResponseApiDTO } from '../../../dtos/responseApi';
 
 @Component({
   selector: 'app-login-page',
@@ -11,7 +14,7 @@ import { AuthService } from 'src/app/core/services/v1/auth.service';
 export class LoginPageComponent implements OnInit {
   public form: credentialsDTO = {} as credentialsDTO;
   
-  constructor(private authService: AuthService, private toastService: ToastService) { }
+  constructor(private authService: AuthService, private toastService: ToastService, private localStorageService: LocalStorageService) { }
 
   ngOnInit(): void {
   }
@@ -25,8 +28,8 @@ export class LoginPageComponent implements OnInit {
       });
   }
 
-  private handleSuccessfulAuthentication(res: any) {
-    console.log(res);
+  private handleSuccessfulAuthentication(res: ResponseApiDTO<IToken>) {
+    this.localStorageService.saveAccessToken(res.responseObject.token);
   }
 
   private handleFailureAuthentication(err: any) {

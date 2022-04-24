@@ -3,8 +3,8 @@ import { credentialsDTO } from 'src/app/core/dtos/credentials';
 import { LocalStorageService } from 'src/app/core/services/localStorage.service';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { AuthService } from 'src/app/core/services/v1/auth.service';
-import { IToken } from '../../../models/token';
 import { ResponseApiDTO } from '../../../dtos/responseApi';
+import { AuthResponseDTO } from 'src/app/core/dtos/authResponseDTO';
 
 @Component({
   selector: 'app-login-page',
@@ -28,8 +28,9 @@ export class LoginPageComponent implements OnInit {
       });
   }
 
-  private handleSuccessfulAuthentication(res: ResponseApiDTO<IToken>) {
+  private handleSuccessfulAuthentication(res: ResponseApiDTO<AuthResponseDTO>) {
     this.localStorageService.saveAccessToken(res.responseObject.token);
+    this.localStorageService.saveUser(res.responseObject.useDetails.user);
   }
 
   private handleFailureAuthentication(err: any) {

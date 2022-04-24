@@ -2,7 +2,7 @@ import { User } from "../models/user"
 
 export interface AuthResponseDTO {
     token: string,
-    useDetails: {
+    userDetails: {
         user: User
     }
 }

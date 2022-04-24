@@ -31,7 +31,7 @@ export class LoginPageComponent implements OnInit {
 
   private handleSuccessfulAuthentication(res: ResponseApiDTO<AuthResponseDTO>) {
     this.localStorageService.saveAccessToken(res.responseObject.token);
-    this.localStorageService.saveUser(res.responseObject.userDetails.user);
+    this.localStorageService.saveUser(res.responseObject.user);
     this.router.navigateByUrl('/');
   }
 

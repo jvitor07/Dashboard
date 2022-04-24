@@ -1,5 +1,6 @@
 package api.dtos;
 
+import api.models.User;
 import api.models.UserDetailsImpl;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,5 +13,5 @@ import lombok.Setter;
 @Setter
 public class AuthResponseDTO {
     private String token;
-    private UserDetailsImpl userDetails;
+    private User user;
 }

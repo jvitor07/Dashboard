@@ -5,6 +5,7 @@ import { ToastService } from 'src/app/core/services/toast.service';
 import { AuthService } from 'src/app/core/services/v1/auth.service';
 import { ResponseApiDTO } from '../../../dtos/responseApi';
 import { AuthResponseDTO } from 'src/app/core/dtos/authResponseDTO';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -14,7 +15,7 @@ import { AuthResponseDTO } from 'src/app/core/dtos/authResponseDTO';
 export class LoginPageComponent implements OnInit {
   public form: credentialsDTO = {} as credentialsDTO;
   
-  constructor(private authService: AuthService, private toastService: ToastService, private localStorageService: LocalStorageService) { }
+  constructor(private authService: AuthService, private toastService: ToastService, private localStorageService: LocalStorageService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -30,7 +31,8 @@ export class LoginPageComponent implements OnInit {
 
   private handleSuccessfulAuthentication(res: ResponseApiDTO<AuthResponseDTO>) {
     this.localStorageService.saveAccessToken(res.responseObject.token);
-    this.localStorageService.saveUser(res.responseObject.useDetails.user);
+    this.localStorageService.saveUser(res.responseObject.userDetails.user);
+    this.router.navigateByUrl('/');
   }
 
   private handleFailureAuthentication(err: any) {

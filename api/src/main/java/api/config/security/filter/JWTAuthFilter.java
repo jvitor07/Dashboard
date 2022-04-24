@@ -56,6 +56,7 @@ public class JWTAuthFilter extends UsernamePasswordAuthenticationFilter {
                 .withSubject(userDetails.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + JWT_EXPIRES_AT))
                 .sign(algorithm);
+        response.setCharacterEncoding("utf-8");
         response.getWriter().write(new ObjectMapper().writeValueAsString(new ResponseDTO<>(null, new AuthResponseDTO(token, userDetails))));
         response.getWriter().flush();
     }
